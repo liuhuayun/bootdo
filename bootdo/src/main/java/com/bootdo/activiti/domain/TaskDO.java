@@ -1,8 +1,11 @@
 package com.bootdo.activiti.domain;
 
+import org.apache.ibatis.type.Alias;
+
 /**
 
  */
+@Alias(value = "Task")
 public class TaskDO {
     private  String taskId;
     private String taskComment;
