@@ -2,9 +2,12 @@ package com.bootdo.system.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -120,5 +123,21 @@ public class RoleServiceImpl implements RoleService {
         int r = roleMapper.batchRemove(ids);
         return r;
     }
+
+
+	@Override
+	public Set<String> listRoles(Long userId) {
+		List<String> rolesign = roleMapper.listUserRoles(userId);
+		Set<String> rolesignSet = new HashSet<>();
+		for (String perm : rolesign) {
+			if (StringUtils.isNotBlank(perm)) {
+				rolesignSet.add(perm);
+			}
+		}
+		return rolesignSet;
+	}
+
+    
+    
 
 }

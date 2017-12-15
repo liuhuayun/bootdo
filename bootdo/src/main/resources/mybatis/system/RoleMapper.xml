@@ -34,6 +34,12 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
+	
+	<select id="listUserRoles" resultType="string">
+		select s_role.role_sign from sys_user s_user INNER JOIN sys_user_role s_role_user on s_user.user_id=s_role_user.user_id
+	    LEFT JOIN sys_role s_role on s_role.role_id=s_role_user.role_id
+	    where s_user.user_id=#{id}
+	</select>
 
 	<select id="count" resultType="int">
 		select count(*) from sys_role

@@ -29,4 +29,6 @@ public interface RoleDao {
 	int remove(Long roleId);
 	
 	int batchRemove(Long[] roleIds);
+
+	List<String> listUserRoles(Long userId);
 }

@@ -22,6 +22,7 @@ import com.bootdo.common.utils.ShiroUtils;
 import com.bootdo.system.dao.UserDao;
 import com.bootdo.system.domain.UserDO;
 import com.bootdo.system.service.MenuService;
+import com.bootdo.system.service.RoleService;
 
 public class UserRealm extends AuthorizingRealm {
 /*	@Autowired
@@ -33,9 +34,12 @@ public class UserRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
 		Long userId = ShiroUtils.getUserId();
 		MenuService menuService = ApplicationContextRegister.getBean(MenuService.class);
+		RoleService roleService = ApplicationContextRegister.getBean(RoleService.class);
 		Set<String> perms = menuService.listPerms(userId);
+		Set<String> rolesign = roleService.listRoles(userId);
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		info.setStringPermissions(perms);
+		info.addRoles(rolesign);
 		return info;
 	}
 
