@@ -1463,3 +1463,26 @@ INSERT INTO `sys_user_role` VALUES ('123', '130', '1');
 INSERT INTO `sys_user_role` VALUES ('124', null, '48');
 INSERT INTO `sys_user_role` VALUES ('125', '132', '52');
 INSERT INTO `sys_user_role` VALUES ('126', '132', '49');
+
+
+
+
+
+DROP TABLE IF EXISTS `fans`;
+CREATE TABLE `fans` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '粉丝表ID',
+  `fans_uid` varchar(255) DEFAULT NULL COMMENT '粉丝业务ID',
+  `fans_nickname` varchar(255) DEFAULT NULL COMMENT '昵称',
+  `fans_picture` varchar(255) DEFAULT NULL COMMENT '头像',
+  `fans_sex` varchar(255) DEFAULT NULL COMMENT '性别',
+  `country` varchar(255) DEFAULT NULL COMMENT '国家',
+  `province` varchar(255) DEFAULT NULL COMMENT '省会',
+  `city` varchar(255) DEFAULT NULL COMMENT '城市',
+  `comment` varchar(255) DEFAULT NULL COMMENT '备注',
+  `created` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `updated` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+  `created_by` varchar(255) DEFAULT NULL COMMENT '创建人',
+  `updated_by` varchar(255) DEFAULT NULL COMMENT '修改人',
+  `modification_num` int(11) DEFAULT '1' COMMENT '修改次数',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='粉丝信息表';

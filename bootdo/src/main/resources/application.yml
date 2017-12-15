@@ -30,3 +30,11 @@ mybatis:
     map-underscore-to-camel-case: true
   mapper-locations: mybatis/**/*Mapper.xml
   typeAliasesPackage: com.bootdo.**.domain
+
+#微信公众号配置
+wechat:
+  mp:
+    appId: wxb194be81cd4e756a
+    secret: 4247bbfa6048c77fc7ace8ad8821e96f
+    token: songjiawei1
+    aesKey:
