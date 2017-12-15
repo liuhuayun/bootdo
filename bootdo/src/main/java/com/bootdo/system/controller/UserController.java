@@ -1,5 +1,6 @@
 package com.bootdo.system.controller;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.bootdo.common.annotation.Log;
 import com.bootdo.common.config.Constant;
 import com.bootdo.common.controller.BaseController;
@@ -11,6 +12,7 @@ import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
 import com.bootdo.system.domain.DeptDO;
 import com.bootdo.system.domain.RoleDO;
+import com.bootdo.system.domain.SysUser;
 import com.bootdo.system.domain.UserDO;
 import com.bootdo.system.service.RoleService;
 import com.bootdo.system.service.UserService;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -44,13 +47,12 @@ public class UserController extends BaseController {
 	@ResponseBody
 	PageUtils list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
-		Query query = new Query(params);
-		List<UserDO> sysUserList = userService.list(query);
-		int total = userService.count(query);
-		PageUtils pageUtil = new PageUtils(sysUserList, total);
-		return pageUtil;
+		EntityWrapper<SysUser>  wrapper = new EntityWrapper<SysUser>(new SysUser());
+		Query<SysUser> query = new Query<SysUser>(params,wrapper);
+		List<SysUser> users = userService.selectList(wrapper);
+		PageUtils pageUtils = new PageUtils(users,query.getPage().getTotal());
+		return pageUtils;
 	}
-
 	@RequiresPermissions("sys:user:add")
 	@Log("添加用户")
 	@GetMapping("/add")
@@ -64,7 +66,7 @@ public class UserController extends BaseController {
 	@Log("编辑用户")
 	@GetMapping("/edit/{id}")
 	String edit(Model model, @PathVariable("id") Long id) {
-		UserDO userDO = userService.get(id);
+		SysUser userDO = userService.selectById(id);
 		model.addAttribute("user", userDO);
 		List<RoleDO> roles = roleService.list(id);
 		model.addAttribute("roles", roles);
@@ -75,12 +77,12 @@ public class UserController extends BaseController {
 	@Log("保存用户")
 	@PostMapping("/save")
 	@ResponseBody
-	R save(UserDO user) {
+	R save(SysUser user) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		user.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
-		if (userService.save(user) > 0) {
+		if (userService.insert(user)) {
 			return R.ok();
 		}
 		return R.error();
@@ -90,11 +92,11 @@ public class UserController extends BaseController {
 	@Log("更新用户")
 	@PostMapping("/update")
 	@ResponseBody
-	R update(UserDO user) {
+	R update(SysUser user) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		if (userService.update(user) > 0) {
+		if (userService.updateById(user)) {
 			return R.ok();
 		}
 		return R.error();
@@ -124,7 +126,7 @@ public class UserController extends BaseController {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		if (userService.remove(id) > 0) {
+		if (userService.deleteById(id)) {
 			return R.ok();
 		}
 		return R.error();
@@ -138,8 +140,8 @@ public class UserController extends BaseController {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		int r = userService.batchremove(userIds);
-		if (r > 0) {
+		boolean r = userService.deleteBatchIds( Arrays.asList(userIds));
+		if (r) {
 			return R.ok();
 		}
 		return R.error();

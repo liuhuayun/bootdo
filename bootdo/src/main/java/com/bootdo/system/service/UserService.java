@@ -7,12 +7,14 @@ import java.util.Set;
 import com.bootdo.system.vo.UserVO;
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.service.IService;
 import com.bootdo.common.domain.Tree;
 import com.bootdo.system.domain.DeptDO;
+import com.bootdo.system.domain.SysUser;
 import com.bootdo.system.domain.UserDO;
 
 @Service
-public interface UserService {
+public interface UserService extends IService<SysUser>{
 	UserDO get(Long id);
 
 	List<UserDO> list(Map<String, Object> map);

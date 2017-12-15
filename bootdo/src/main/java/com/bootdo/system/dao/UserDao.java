@@ -1,5 +1,7 @@
 package com.bootdo.system.dao;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.bootdo.system.domain.SysUser;
 import com.bootdo.system.domain.UserDO;
 
 import java.util.List;
@@ -14,7 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2017-10-03 09:45:11
  */
 @Mapper
-public interface UserDao {
+public interface UserDao extends BaseMapper<SysUser>{
 
 	UserDO get(Long userId);
 	

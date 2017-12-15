@@ -8,7 +8,7 @@ import java.util.List;
 public class PageUtils implements Serializable {
 	private static final long serialVersionUID = 1L;
 	// 总记录数
-	private int total;
+	private long total;
 	// 列表数据
 	private List<?> rows;
 
@@ -24,12 +24,12 @@ public class PageUtils implements Serializable {
 	 * @param currPage
 	 *            当前页数
 	 */
-	public PageUtils(List<?> list, int total) {
+	public PageUtils(List<?> list, long total) {
 		this.rows = list;
 		this.total = total;
 	}
 
-	public int getTotal() {
+	public long getTotal() {
 		return total;
 	}
 
