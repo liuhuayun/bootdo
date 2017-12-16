@@ -30,12 +30,8 @@ public class BlogController {
 	public PageUtils opentList(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
-
 		List<ContentDO> bContentList = bContentService.list(query);
-		int total = bContentService.count(query);
-
-		PageUtils pageUtils = new PageUtils(bContentList, total);
-
+		PageUtils pageUtils = new PageUtils(bContentList, query.getPage().getTotal());
 		return pageUtils;
 	}
 
