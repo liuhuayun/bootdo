@@ -66,7 +66,7 @@ public class UserController extends BaseController {
 	@Log("编辑用户")
 	@GetMapping("/edit/{id}")
 	String edit(Model model, @PathVariable("id") Long id) {
-		SysUser userDO = userService.selectById(id);
+		UserDO userDO =userService.get(id);
 		model.addAttribute("user", userDO);
 		List<RoleDO> roles = roleService.list(id);
 		model.addAttribute("roles", roles);
