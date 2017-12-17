@@ -49,7 +49,7 @@ public class UserController extends BaseController<SysUser, UserService> {
 		return prefix + "/user";
 	}
 
-	@GetMapping("/list")
+	@RequestMapping("/list")
 	@ResponseBody
 	PageUtils list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
