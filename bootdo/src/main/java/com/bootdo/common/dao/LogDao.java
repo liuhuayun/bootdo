@@ -1,6 +1,8 @@
 package com.bootdo.common.dao;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.bootdo.common.domain.LogDO;
+import com.bootdo.common.domain.model.SysLog;
 
 import java.util.List;
 import java.util.Map;
@@ -14,7 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2017-10-03 15:45:42
  */
 @Mapper
-public interface LogDao {
+public interface LogDao extends BaseMapper<SysLog>{
 
 	LogDO get(Long id);
 	

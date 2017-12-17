@@ -1,6 +1,8 @@
 package com.bootdo.oa.service;
 
+import com.baomidou.mybatisplus.service.IService;
 import com.bootdo.oa.domain.NotifyRecordDO;
+import com.bootdo.oa.domain.model.OaNotifyRecord;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +14,7 @@ import java.util.Map;
  * @email 1992lcg@163.com
  * @date 2017-10-09 17:18:45
  */
-public interface NotifyRecordService {
+public interface NotifyRecordService extends IService<OaNotifyRecord> {
 	
 	NotifyRecordDO get(Long id);
 	

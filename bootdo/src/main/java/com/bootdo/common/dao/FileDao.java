@@ -1,6 +1,8 @@
 package com.bootdo.common.dao;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.bootdo.common.domain.FileDO;
+import com.bootdo.common.domain.model.SysFile;
 
 import java.util.List;
 import java.util.Map;
@@ -14,7 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2017-10-03 15:45:42
  */
 @Mapper
-public interface FileDao {
+public interface FileDao extends BaseMapper<SysFile> {
 
 	FileDO get(Long id);
 	

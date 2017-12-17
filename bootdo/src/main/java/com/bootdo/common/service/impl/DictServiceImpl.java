@@ -10,13 +10,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.bootdo.common.dao.DictDao;
 import com.bootdo.common.domain.DictDO;
+import com.bootdo.common.domain.model.SysDict;
 import com.bootdo.common.service.DictService;
 
 
 @Service
-public class DictServiceImpl implements DictService {
+public class DictServiceImpl extends ServiceImpl<DictDao, SysDict> implements DictService {
     @Autowired
     private DictDao dictDao;
 

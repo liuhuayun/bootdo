@@ -1,6 +1,8 @@
 package com.bootdo.blog.service;
 
+import com.baomidou.mybatisplus.service.IService;
 import com.bootdo.blog.domain.ContentDO;
+import com.bootdo.blog.domain.model.BlogContent;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +14,7 @@ import java.util.Map;
  * @email 1992lcg@163.com
  * @date 2017-09-09 10:03:34
  */
-public interface ContentService {
+public interface ContentService extends IService<BlogContent> {
 	
 	ContentDO get(Long cid);
 	

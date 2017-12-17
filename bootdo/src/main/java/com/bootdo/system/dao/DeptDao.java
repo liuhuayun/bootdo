@@ -1,6 +1,8 @@
 package com.bootdo.system.dao;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.bootdo.system.domain.DeptDO;
+import com.bootdo.system.domain.model.SysDept;
 
 import java.util.List;
 import java.util.Map;
@@ -14,7 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2017-10-03 15:35:39
  */
 @Mapper
-public interface DeptDao {
+public interface DeptDao extends BaseMapper<SysDept>{
 
 	DeptDO get(Long deptId);
 	

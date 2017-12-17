@@ -1,11 +1,15 @@
 package com.bootdo.common.controller;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.bootdo.common.config.Constant;
 import com.bootdo.common.domain.DictDO;
+import com.bootdo.common.domain.model.SysDict;
 import com.bootdo.common.service.DictService;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
+import com.bootdo.system.domain.model.SysUser;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +30,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/common/sysDict")
-public class DictController extends BaseController {
+public class DictController extends BaseController<SysDict, DictService> {
 	@Autowired
 	private DictService sysDictService;
 
@@ -41,10 +45,10 @@ public class DictController extends BaseController {
 	@RequiresPermissions("common:sysDict:sysDict")
 	public PageUtils list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
-		Query query = new Query(params);
-		List<DictDO> sysDictList = sysDictService.list(query);
-		int total = sysDictService.count(query);
-		PageUtils pageUtils = new PageUtils(sysDictList, total);
+		EntityWrapper<SysDict>  wrapper = new EntityWrapper<SysDict>(new SysDict());
+		Query<SysDict> query = new Query<SysDict>(params,wrapper);
+		List<SysDict> sysDictList = sysDictService.selectList(wrapper);
+		PageUtils pageUtils = new PageUtils(sysDictList, query.getPage().getTotal());
 		return pageUtils;
 	}
 

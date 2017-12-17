@@ -1,18 +1,21 @@
 package com.bootdo.common.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.bootdo.common.dao.LogDao;
 import com.bootdo.common.domain.LogDO;
 import com.bootdo.common.domain.PageDO;
+import com.bootdo.common.domain.model.SysLog;
 import com.bootdo.common.service.LogService;
 import com.bootdo.common.utils.Query;
 
 @SuppressWarnings("AlibabaRemoveCommentedCode")
 @Service
-public class LogServiceImpl implements LogService {
+public class LogServiceImpl extends ServiceImpl<LogDao, SysLog> implements LogService {
 	@Autowired
 	LogDao logMapper;
 

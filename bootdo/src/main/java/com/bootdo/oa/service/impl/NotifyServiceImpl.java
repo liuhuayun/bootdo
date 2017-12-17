@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.bootdo.common.service.DictService;
 import com.bootdo.common.utils.DateUtils;
 import com.bootdo.common.utils.PageUtils;
@@ -18,11 +19,12 @@ import com.bootdo.oa.dao.NotifyRecordDao;
 import com.bootdo.oa.domain.NotifyDO;
 import com.bootdo.oa.domain.NotifyDTO;
 import com.bootdo.oa.domain.NotifyRecordDO;
+import com.bootdo.oa.domain.model.OaNotify;
 import com.bootdo.oa.service.NotifyService;
 import com.bootdo.system.dao.UserDao;
 
 @Service
-public class NotifyServiceImpl implements NotifyService {
+public class NotifyServiceImpl extends ServiceImpl<NotifyDao, OaNotify> implements NotifyService {
 	@Autowired
 	private NotifyDao notifyDao;
 	@Autowired

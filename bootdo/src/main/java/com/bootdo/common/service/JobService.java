@@ -1,6 +1,8 @@
 package com.bootdo.common.service;
 
+import com.baomidou.mybatisplus.service.IService;
 import com.bootdo.common.domain.TaskDO;
+import com.bootdo.common.domain.model.SysTask;
 
 import java.util.List;
 import java.util.Map;
@@ -14,7 +16,7 @@ import org.quartz.SchedulerException;
  * @email 1992lcg@163.com
  * @date 2017-09-26 20:53:48
  */
-public interface JobService {
+public interface JobService extends IService<SysTask>{
 	
 	TaskDO get(Long id);
 	

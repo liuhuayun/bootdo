@@ -1,7 +1,9 @@
 package com.bootdo.oa.dao;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.bootdo.oa.domain.NotifyDO;
 import com.bootdo.oa.domain.NotifyDTO;
+import com.bootdo.oa.domain.model.OaNotify;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +18,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2017-10-05 17:11:16
  */
 @Mapper
-public interface NotifyDao {
+public interface NotifyDao extends BaseMapper<OaNotify>{
 
 	NotifyDO get(Long id);
 

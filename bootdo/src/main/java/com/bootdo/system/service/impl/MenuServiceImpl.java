@@ -1,10 +1,12 @@
 package com.bootdo.system.service.impl;
 
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.bootdo.common.domain.Tree;
 import com.bootdo.common.utils.BuildTree;
 import com.bootdo.system.dao.MenuDao;
 import com.bootdo.system.dao.RoleMenuDao;
 import com.bootdo.system.domain.MenuDO;
+import com.bootdo.system.domain.model.SysMenu;
 import com.bootdo.system.service.MenuService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,7 @@ import java.util.*;
 @SuppressWarnings("AlibabaRemoveCommentedCode")
 @Service
 @Transactional(readOnly = true,rollbackFor = Exception.class)
-public class MenuServiceImpl implements MenuService {
+public class MenuServiceImpl extends ServiceImpl<MenuDao, SysMenu> implements MenuService {
 	@Autowired
 	MenuDao menuMapper;
 	@Autowired
@@ -46,38 +48,6 @@ public class MenuServiceImpl implements MenuService {
 		// 默认顶级菜单为０，根据数据库实际情况调整
 		Tree<MenuDO> t = BuildTree.build(trees);
 		return t;
-	}
-
-	@Override
-	public List<MenuDO> list() {
-		List<MenuDO> menus = menuMapper.list(new HashMap<String,Object>(16));
-		return menus;
-	}
-
-	@Transactional(readOnly = false,rollbackFor = Exception.class)
-	@Override
-	public int remove(Long id) {
-		int result = menuMapper.remove(id);
-		return result;
-	}
-	@Transactional(readOnly = false,rollbackFor = Exception.class)
-	@Override
-	public int save(MenuDO menu) {
-		int r = menuMapper.save(menu);
-		return r;
-	}
-
-	@Transactional(readOnly = false,rollbackFor = Exception.class)
-	@Override
-	public int update(MenuDO menu) {
-		int r = menuMapper.update(menu);
-		return r;
-	}
-
-	@Override
-	public MenuDO get(Long id) {
-		MenuDO menuDO = menuMapper.get(id);
-		return menuDO;
 	}
 
 	@Override

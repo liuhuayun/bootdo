@@ -7,6 +7,7 @@ import com.bootdo.common.utils.MD5Utils;
 import com.bootdo.common.utils.R;
 import com.bootdo.common.utils.ShiroUtils;
 import com.bootdo.system.domain.MenuDO;
+import com.bootdo.system.domain.model.SysMenu;
 import com.bootdo.system.service.MenuService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-public class LoginController extends BaseController {
+public class LoginController extends BaseController<SysMenu, MenuService> {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired

@@ -6,14 +6,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.bootdo.blog.dao.ContentDao;
 import com.bootdo.blog.domain.ContentDO;
+import com.bootdo.blog.domain.model.BlogContent;
 import com.bootdo.blog.service.ContentService;
 
 
 
 @Service
-public class ContentServiceImpl implements ContentService {
+public class ContentServiceImpl extends ServiceImpl<ContentDao, BlogContent> implements ContentService {
 	@Autowired
 	private ContentDao bContentMapper;
 	

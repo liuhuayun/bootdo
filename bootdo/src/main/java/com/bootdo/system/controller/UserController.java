@@ -1,5 +1,20 @@
 package com.bootdo.system.controller;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.bootdo.common.annotation.Log;
 import com.bootdo.common.config.Constant;
@@ -12,24 +27,15 @@ import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
 import com.bootdo.system.domain.DeptDO;
 import com.bootdo.system.domain.RoleDO;
-import com.bootdo.system.domain.SysUser;
 import com.bootdo.system.domain.UserDO;
+import com.bootdo.system.domain.model.SysUser;
 import com.bootdo.system.service.RoleService;
 import com.bootdo.system.service.UserService;
 import com.bootdo.system.vo.UserVO;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 @RequestMapping("/sys/user")
 @Controller
-public class UserController extends BaseController {
+public class UserController extends BaseController<SysUser, UserService> {
 	private String prefix="system/user"  ;
 	@Autowired
 	UserService userService;

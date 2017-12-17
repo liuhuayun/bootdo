@@ -1,61 +1,27 @@
 package com.bootdo.system.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.bootdo.common.domain.Tree;
 import com.bootdo.common.utils.BuildTree;
 import com.bootdo.system.dao.DeptDao;
 import com.bootdo.system.domain.DeptDO;
+import com.bootdo.system.domain.model.SysDept;
 import com.bootdo.system.service.DeptService;
 
 
 
 @Service
-public class DeptServiceImpl implements DeptService {
+public class DeptServiceImpl extends ServiceImpl<DeptDao, SysDept> implements DeptService {
 	@Autowired
 	private DeptDao sysDeptMapper;
-
-	@Override
-	public DeptDO get(Long deptId){
-		return sysDeptMapper.get(deptId);
-	}
-
-	@Override
-	public List<DeptDO> list(Map<String, Object> map){
-		return sysDeptMapper.list(map);
-	}
-
-	@Override
-	public int count(Map<String, Object> map){
-		return sysDeptMapper.count(map);
-	}
-
-	@Override
-	public int save(DeptDO sysDept){
-		return sysDeptMapper.save(sysDept);
-	}
-
-	@Override
-	public int update(DeptDO sysDept){
-		return sysDeptMapper.update(sysDept);
-	}
-
-	@Override
-	public int remove(Long deptId){
-		return sysDeptMapper.remove(deptId);
-	}
-
-	@Override
-	public int batchRemove(Long[] deptIds){
-		return sysDeptMapper.batchRemove(deptIds);
-	}
-
 	@Override
 	public Tree<DeptDO> getTree() {
 		List<Tree<DeptDO>> trees = new ArrayList<Tree<DeptDO>>();

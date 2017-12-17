@@ -1,23 +1,30 @@
 package com.bootdo.system.controller;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.bootdo.common.config.Constant;
 import com.bootdo.common.controller.BaseController;
 import com.bootdo.common.domain.Tree;
 import com.bootdo.common.utils.R;
 import com.bootdo.system.domain.DeptDO;
+import com.bootdo.system.domain.model.SysDept;
 import com.bootdo.system.service.DeptService;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 部门管理
@@ -29,7 +36,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/system/sysDept")
-public class DeptController extends BaseController {
+public class DeptController extends BaseController<SysDept, DeptService> {
 	private String prefix = "system/dept";
 	@Autowired
 	private DeptService sysDeptService;
@@ -45,9 +52,9 @@ public class DeptController extends BaseController {
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("system:sysDept:sysDept")
-	public List<DeptDO> list() {
+	public List<SysDept> list() {
 		Map<String, Object> query = new HashMap<>(16);
-		List<DeptDO> sysDeptList = sysDeptService.list(query);
+		List<SysDept> sysDeptList = sysDeptService.selectByMap(query);
 		return sysDeptList;
 	}
 
@@ -58,7 +65,7 @@ public class DeptController extends BaseController {
 		if (pId == 0) {
 			model.addAttribute("pName", "总部门");
 		} else {
-			model.addAttribute("pName", sysDeptService.get(pId).getName());
+			model.addAttribute("pName", sysDeptService.selectById(pId).getName());
 		}
 		return  prefix + "/add";
 	}
@@ -66,12 +73,12 @@ public class DeptController extends BaseController {
 	@GetMapping("/edit/{deptId}")
 	@RequiresPermissions("system:sysDept:edit")
 	String edit(@PathVariable("deptId") Long deptId, Model model) {
-		DeptDO sysDept = sysDeptService.get(deptId);
+		SysDept sysDept = sysDeptService.selectById(deptId);
 		model.addAttribute("sysDept", sysDept);
 		if(Constant.DEPT_ROOT_ID.equals(sysDept.getParentId())) {
 			model.addAttribute("parentDeptName", "无");
 		}else {
-			DeptDO parDept = sysDeptService.get(sysDept.getParentId());
+			SysDept parDept = sysDeptService.selectById(sysDept.getParentId());
 			model.addAttribute("parentDeptName", parDept.getName());
 		}
 		return  prefix + "/edit";
@@ -83,11 +90,11 @@ public class DeptController extends BaseController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("system:sysDept:add")
-	public R save(DeptDO sysDept) {
+	public R save(SysDept sysDept) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		if (sysDeptService.save(sysDept) > 0) {
+		if (sysDeptService.insert(sysDept)) {
 			return R.ok();
 		}
 		return R.error();
@@ -99,11 +106,11 @@ public class DeptController extends BaseController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("system:sysDept:edit")
-	public R update(DeptDO sysDept) {
+	public R update(SysDept sysDept) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		if (sysDeptService.update(sysDept) > 0) {
+		if (sysDeptService.updateById(sysDept)) {
 			return R.ok();
 		}
 		return R.error();
@@ -121,11 +128,11 @@ public class DeptController extends BaseController {
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("parentId", deptId);
-		if(sysDeptService.count(map)>0) {
+		if(!sysDeptService.selectByMap(map).isEmpty()) {
 			return R.error(1, "包含下级部门,不允许修改");
 		}
 		if(sysDeptService.checkDeptHasUser(deptId)) {
-			if (sysDeptService.remove(deptId) > 0) {
+			if (sysDeptService.deleteById(deptId)) {
 				return R.ok();
 			}
 		}else {
@@ -144,7 +151,7 @@ public class DeptController extends BaseController {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		sysDeptService.batchRemove(deptIds);
+		sysDeptService.deleteBatchIds(Arrays.asList(deptIds));
 		return R.ok();
 	}
 

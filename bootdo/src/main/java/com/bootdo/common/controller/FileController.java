@@ -1,9 +1,13 @@
 package com.bootdo.common.controller;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.bootdo.common.config.BootdoConfig;
 import com.bootdo.common.domain.FileDO;
+import com.bootdo.common.domain.model.SysFile;
 import com.bootdo.common.service.FileService;
 import com.bootdo.common.utils.*;
+import com.bootdo.system.domain.model.SysUser;
+
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +30,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/common/sysFile")
-public class FileController extends BaseController {
+public class FileController extends BaseController<SysFile, FileService> {
 
 	@Autowired
 	private FileService sysFileService;
@@ -46,10 +50,11 @@ public class FileController extends BaseController {
 	@RequiresPermissions("common:sysFile:sysFile")
 	public PageUtils list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
-		Query query = new Query(params);
-		List<FileDO> sysFileList = sysFileService.list(query);
-		int total = sysFileService.count(query);
-		PageUtils pageUtils = new PageUtils(sysFileList, total);
+		EntityWrapper<SysFile>  wrapper = new EntityWrapper<SysFile>(new SysFile());
+		Query<SysFile> query = new Query<SysFile>(params,wrapper);
+		List<SysFile> sysFileList = sysFileService.selectList(wrapper);
+		
+		PageUtils pageUtils = new PageUtils(sysFileList, query.getPage().getTotal());
 		return pageUtils;
 	}
 

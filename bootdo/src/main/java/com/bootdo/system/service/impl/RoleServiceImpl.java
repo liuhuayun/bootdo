@@ -14,17 +14,19 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.bootdo.system.dao.RoleDao;
 import com.bootdo.system.dao.RoleMenuDao;
 import com.bootdo.system.dao.UserDao;
 import com.bootdo.system.dao.UserRoleDao;
 import com.bootdo.system.domain.RoleDO;
 import com.bootdo.system.domain.RoleMenuDO;
+import com.bootdo.system.domain.model.SysRole;
 import com.bootdo.system.service.RoleService;
 
 
 @Service
-public class RoleServiceImpl implements RoleService {
+public class RoleServiceImpl extends ServiceImpl<RoleDao, SysRole> implements RoleService {
 
     public static final String ROLE_ALL_KEY = "\"role_all\"";
 

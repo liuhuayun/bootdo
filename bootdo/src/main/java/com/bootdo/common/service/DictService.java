@@ -1,6 +1,8 @@
 package com.bootdo.common.service;
 
+import com.baomidou.mybatisplus.service.IService;
 import com.bootdo.common.domain.DictDO;
+import com.bootdo.common.domain.model.SysDict;
 import com.bootdo.system.domain.UserDO;
 
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.Map;
  * @email 1992lcg@163.com
  * @date 2017-09-29 18:28:07
  */
-public interface DictService {
+public interface DictService extends IService<SysDict>{
 	
 	DictDO get(Long id);
 	

@@ -5,10 +5,12 @@ import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.service.IService;
 import com.bootdo.system.domain.RoleDO;
+import com.bootdo.system.domain.model.SysRole;
 
 @Service
-public interface RoleService {
+public interface RoleService extends IService<SysRole>{
 
 	RoleDO get(Long id);
 

@@ -1,6 +1,7 @@
 package com.bootdo.blog.controller;
 
 import com.bootdo.blog.domain.ContentDO;
+import com.bootdo.blog.domain.model.BlogContent;
 import com.bootdo.blog.service.ContentService;
 import com.bootdo.common.config.Constant;
 import com.bootdo.common.controller.BaseController;
@@ -26,7 +27,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/blog/bContent")
-public class ContentController extends BaseController {
+public class ContentController extends BaseController<BlogContent,ContentService> {
 	@Autowired
     ContentService bContentService;
 
@@ -42,8 +43,7 @@ public class ContentController extends BaseController {
 	public PageUtils list(@RequestParam Map<String, Object> params) {
 		Query query = new Query(params);
 		List<ContentDO> bContentList = bContentService.list(query);
-		int total = bContentService.count(query);
-		PageUtils pageUtils = new PageUtils(bContentList, total);
+		PageUtils pageUtils = new PageUtils(bContentList, query.getPage().getTotal());
 		return pageUtils;
 	}
 

@@ -1,6 +1,8 @@
 package com.bootdo.system.dao;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.bootdo.system.domain.MenuDO;
+import com.bootdo.system.domain.model.SysMenu;
 
 import java.util.List;
 import java.util.Map;
@@ -14,7 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2017-10-03 09:45:09
  */
 @Mapper
-public interface MenuDao {
+public interface MenuDao extends BaseMapper<SysMenu> {
 
 	MenuDO get(Long menuId);
 	

@@ -2,6 +2,8 @@ package com.bootdo.system.domain;
 
 import java.util.List;
 
+import com.bootdo.system.domain.model.SysUser;
+
 public class UserDO extends SysUser {
     private String deptName;
     

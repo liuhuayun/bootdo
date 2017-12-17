@@ -6,14 +6,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.bootdo.common.dao.FileDao;
 import com.bootdo.common.domain.FileDO;
+import com.bootdo.common.domain.model.SysFile;
 import com.bootdo.common.service.FileService;
 
 
 
 @Service
-public class FileServiceImpl implements FileService {
+public class FileServiceImpl extends ServiceImpl<FileDao, SysFile> implements FileService {
 	@Autowired
 	private FileDao sysFileMapper;
 	

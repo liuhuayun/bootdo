@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.bootdo.system.vo.UserVO;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.service.IService;
 import com.bootdo.common.domain.Tree;
 import com.bootdo.system.domain.DeptDO;
-import com.bootdo.system.domain.SysUser;
 import com.bootdo.system.domain.UserDO;
+import com.bootdo.system.domain.model.SysUser;
+import com.bootdo.system.vo.UserVO;
 
 @Service
 public interface UserService extends IService<SysUser>{

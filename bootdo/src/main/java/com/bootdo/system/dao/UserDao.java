@@ -1,13 +1,13 @@
 package com.bootdo.system.dao;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.bootdo.system.domain.SysUser;
-import com.bootdo.system.domain.UserDO;
-
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.bootdo.system.domain.UserDO;
+import com.bootdo.system.domain.model.SysUser;
 
 /**
  * 

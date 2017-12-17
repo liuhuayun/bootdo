@@ -2,6 +2,7 @@ package com.bootdo.common.controller;
 
 import com.bootdo.common.config.Constant;
 import com.bootdo.common.domain.TaskDO;
+import com.bootdo.common.domain.model.SysTask;
 import com.bootdo.common.service.JobService;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
@@ -22,7 +23,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/common/job")
-public class JobController extends BaseController{
+public class JobController extends BaseController<SysTask, JobService>{
 	@Autowired
 	private JobService taskScheduleJobService;
 
@@ -37,8 +38,7 @@ public class JobController extends BaseController{
 		// 查询列表数据
 		Query query = new Query(params);
 		List<TaskDO> taskScheduleJobList = taskScheduleJobService.list(query);
-		int total = taskScheduleJobService.count(query);
-		PageUtils pageUtils = new PageUtils(taskScheduleJobList, total);
+		PageUtils pageUtils = new PageUtils(taskScheduleJobList, query.getPage().getTotal());
 		return pageUtils;
 	}
 

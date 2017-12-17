@@ -1,9 +1,12 @@
 package com.bootdo.system.service.impl;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
-import com.bootdo.common.utils.MD5Utils;
-import com.bootdo.system.vo.UserVO;
 import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,14 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.bootdo.common.domain.Tree;
 import com.bootdo.common.utils.BuildTree;
+import com.bootdo.common.utils.MD5Utils;
 import com.bootdo.system.dao.DeptDao;
 import com.bootdo.system.dao.UserDao;
 import com.bootdo.system.dao.UserRoleDao;
 import com.bootdo.system.domain.DeptDO;
-import com.bootdo.system.domain.SysUser;
 import com.bootdo.system.domain.UserDO;
 import com.bootdo.system.domain.UserRoleDO;
+import com.bootdo.system.domain.model.SysUser;
 import com.bootdo.system.service.UserService;
+import com.bootdo.system.vo.UserVO;
 
 @Transactional
 @Service

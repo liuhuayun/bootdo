@@ -1,19 +1,21 @@
 package com.bootdo.oa.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.bootdo.oa.dao.NotifyRecordDao;
 import com.bootdo.oa.domain.NotifyRecordDO;
+import com.bootdo.oa.domain.model.OaNotifyRecord;
 import com.bootdo.oa.service.NotifyRecordService;
 
 
 
 @Service
-public class NotifyRecordServiceImpl implements NotifyRecordService {
+public class NotifyRecordServiceImpl extends ServiceImpl<NotifyRecordDao, OaNotifyRecord> implements NotifyRecordService {
 	@Autowired
 	private NotifyRecordDao notifyRecordDao;
 	

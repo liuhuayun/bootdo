@@ -45,8 +45,7 @@ public class SalaryController {
         //查询列表数据
         Query query = new Query(params);
         List<SalaryDO> salaryList = salaryService.list(query);
-        int total = salaryService.count(query);
-        PageUtils pageUtils = new PageUtils(salaryList, total);
+        PageUtils pageUtils = new PageUtils(salaryList, query.getPage().getTotal());
         return pageUtils;
     }
 

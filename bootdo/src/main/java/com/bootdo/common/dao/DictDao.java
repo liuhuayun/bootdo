@@ -1,6 +1,8 @@
 package com.bootdo.common.dao;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.bootdo.common.domain.DictDO;
+import com.bootdo.common.domain.model.SysDict;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +17,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2017-10-03 15:45:42
  */
 @Mapper
-public interface DictDao {
+public interface DictDao extends BaseMapper<SysDict>{
 
 	DictDO get(Long id);
 

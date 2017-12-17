@@ -7,6 +7,7 @@ import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
 import com.bootdo.oa.domain.NotifyDO;
 import com.bootdo.oa.domain.NotifyRecordDO;
+import com.bootdo.oa.domain.model.OaNotify;
 import com.bootdo.oa.service.NotifyRecordService;
 import com.bootdo.oa.service.NotifyService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -30,7 +31,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/oa/notify")
-public class NotifyController extends BaseController {
+public class NotifyController extends BaseController<OaNotify, NotifyService> {
 	@Autowired
 	private NotifyService notifyService;
 	@Autowired
@@ -49,8 +50,7 @@ public class NotifyController extends BaseController {
 		// 查询列表数据
 		Query query = new Query(params);
 		List<NotifyDO> notifyList = notifyService.list(query);
-		int total = notifyService.count(query);
-		PageUtils pageUtils = new PageUtils(notifyList, total);
+		PageUtils pageUtils = new PageUtils(notifyList, query.getPage().getTotal());
 		return pageUtils;
 	}
 
@@ -149,9 +149,8 @@ public class NotifyController extends BaseController {
 	@ResponseBody
 	@GetMapping("/selfList")
 	PageUtils selfList(@RequestParam Map<String, Object> params) {
-		Query query = new Query(params);
+		Query query = new Query(params,false);
 		query.put("userId", getUserId());
-
 		return notifyService.selfList(query);
 	}
 

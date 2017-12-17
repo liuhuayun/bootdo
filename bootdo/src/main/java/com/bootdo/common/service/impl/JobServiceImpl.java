@@ -1,9 +1,11 @@
 package com.bootdo.common.service.impl;
 
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.bootdo.common.config.Constant;
 import com.bootdo.common.dao.TaskDao;
 import com.bootdo.common.domain.ScheduleJob;
 import com.bootdo.common.domain.TaskDO;
+import com.bootdo.common.domain.model.SysTask;
 import com.bootdo.common.quartz.utils.QuartzManager;
 import com.bootdo.common.service.JobService;
 import com.bootdo.common.utils.ScheduleJobUtils;
@@ -16,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class JobServiceImpl implements JobService {
+public class JobServiceImpl extends ServiceImpl<TaskDao, SysTask> implements JobService {
 
 	@Autowired
 	private TaskDao taskScheduleJobMapper;

@@ -1,6 +1,8 @@
 package com.bootdo.blog.dao;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.bootdo.blog.domain.ContentDO;
+import com.bootdo.blog.domain.model.BlogContent;
 
 import java.util.List;
 import java.util.Map;
@@ -14,7 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2017-10-03 16:17:48
  */
 @Mapper
-public interface ContentDao {
+public interface ContentDao extends BaseMapper<BlogContent>{
 
 	ContentDO get(Long cid);
 	

@@ -5,11 +5,13 @@ import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.service.IService;
 import com.bootdo.common.domain.Tree;
 import com.bootdo.system.domain.MenuDO;
+import com.bootdo.system.domain.model.SysMenu;
 
 @Service
-public interface MenuService {
+public interface MenuService extends IService<SysMenu>{
 	Tree<MenuDO> getSysMenuTree(Long id);
 
 	List<Tree<MenuDO>> listMenuTree(Long id);
@@ -18,15 +20,6 @@ public interface MenuService {
 
 	Tree<MenuDO> getTree(Long id);
 
-	List<MenuDO> list();
-
-	int remove(Long id);
-
-	int save(MenuDO menu);
-
-	int update(MenuDO menu);
-
-	MenuDO get(Long id);
 
 	Set<String> listPerms(Long userId);
 }
