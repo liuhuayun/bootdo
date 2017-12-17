@@ -1,4 +1,4 @@
-package com.bootdo.system.domain;
+package com.bootdo.system.domain.model;
 
 import java.io.Serializable;
 
