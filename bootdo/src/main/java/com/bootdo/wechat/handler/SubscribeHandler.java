@@ -1,7 +1,6 @@
 package com.bootdo.wechat.handler;
 
 import com.bootdo.wechat.builder.TextBuilder;
-import com.bootdo.wechat.service.SaveUserWxInfoService;
 
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
@@ -20,8 +19,7 @@ import java.util.Map;
  */
 @Component
 public class SubscribeHandler extends AbstractHandler {
-	@Autowired
-	private SaveUserWxInfoService saveUserWxInfoService;
+
 
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
@@ -35,9 +33,8 @@ public class SubscribeHandler extends AbstractHandler {
                 .userInfo(wxMessage.getFromUser(), null);
 
         if (userWxInfo != null) {
-            // TODO 可以添加关注用户到本地
+            // TODO 可以将关注用户信息进行数据存储
             this.logger.info(userWxInfo.toString());
-            saveUserWxInfoService.saveUserWxInfo(userWxInfo);
             
         }
 
