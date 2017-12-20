@@ -1,5 +1,10 @@
 package ${package}.domain;
 
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,12 +20,21 @@ import java.math.BigDecimal;
  * @email ${email}
  * @date ${datetime}
  */
-public class ${className}DO implements Serializable {
+ 
+@TableName("${tableName}") 
+public class ${className} extends Model<${className}> {
 	private static final long serialVersionUID = 1L;
 	
 #foreach ($column in $columns)
-	//$column.comments
+	#if(${column.extra}=='auto_increment')
+    @TableId(value="${column.columnName}",type= IdType.AUTO)
 	private $column.attrType $column.attrname;
+    #else
+    #if("$column.columnName"!="$column.attrname")
+    @TableField("${column.columnName}")
+    #end
+	private $column.attrType $column.attrname;
+    #end
 #end
 
 #foreach ($column in $columns)
@@ -37,4 +51,22 @@ public class ${className}DO implements Serializable {
 		return $column.attrname;
 	}
 #end
+
+	@Override
+	protected Serializable pkVal() {
+		return this.id;
+	}
+	
+	@Override
+	public String toString() {
+		#foreach ($column in $columns)
+	    #if(${velocityCount}==1)return 
+	    "${className}{"+
+	    "$column.attrname="+$column.attrname+
+	    #else
+	    ",$column.attrname="+$column.attrname+
+	    #end
+		#end
+		"}";		
+	}
 }

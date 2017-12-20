@@ -1,6 +1,6 @@
 package ${package}.dao;
 
-import ${package}.domain.${className}DO;
+import ${package}.domain.${className};
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +23,7 @@ public interface ${className}Mapper {
 	@Select("select #foreach($column in $columns)
 `$column.columnName`#if($velocityCount != $columns.size()), #end	
 #end from ${tableName} where ${pk.columnName} = #{id}")
-	${className}DO get(${pk.attrType} ${pk.attrname});
+	${className} get(${pk.attrType} ${pk.attrname});
 	
 	@Select("<script>" +
 	"select * from ${tableName} " + 
@@ -44,7 +44,7 @@ public interface ${className}Mapper {
 			"limit #{offset}, #{limit}" + 
 			"</if>"+
 			"</script>")
-	List<${className}DO> list(Map<String,Object> map);
+	List<${className}> list(Map<String,Object> map);
 	
 	@Select("<script>" +
 	"select count(*) from ${tableName} " + 
@@ -66,7 +66,7 @@ public interface ${className}Mapper {
 #{$column.attrname}#if($velocityCount != $columns.size()), #end
 #end			
 #end)")
-	int save(${className}DO ${classname});
+	int save(${className} ${classname});
 	
 	@Update("<script>"+ 
 			"update ${tableName} " + 
@@ -77,7 +77,7 @@ public interface ${className}Mapper {
 					"</set>" + 
 					"where ${pk.columnName} = #{${pk.attrname}}"+
 			"</script>")
-	int update(${className}DO ${classname});
+	int update(${className} ${classname});
 	
 	@Delete("delete from ${tableName} where ${pk.columnName} =#{${pk.attrname}}")
 	int remove(${pk.attrType} ${pk.columnName});
