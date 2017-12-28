@@ -37,7 +37,7 @@ public class JobController extends BaseController<SysTask, JobService>{
 	public PageUtils list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
-		List<TaskDO> taskScheduleJobList = taskScheduleJobService.list(query);
+		List<TaskDO> taskScheduleJobList = taskScheduleJobService.list(query.getSearchParam());
 		PageUtils pageUtils = new PageUtils(taskScheduleJobList, query.getPage().getTotal());
 		return pageUtils;
 	}

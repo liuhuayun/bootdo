@@ -49,7 +49,7 @@ public class NotifyController extends BaseController<OaNotify, NotifyService> {
 	public PageUtils list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Query query = new Query(params);
-		List<NotifyDO> notifyList = notifyService.list(query);
+		List<NotifyDO> notifyList = notifyService.list(query.getSearchParam());
 		PageUtils pageUtils = new PageUtils(notifyList, query.getPage().getTotal());
 		return pageUtils;
 	}
