@@ -9,6 +9,12 @@ server:
 security:
   basic:
     enabled: false
+    
+banner:
+  charset: UTF-8
+  image:
+    invert: true
+    
 spring:
   thymeleaf:
     mode: LEGACYHTML5

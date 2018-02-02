@@ -6,6 +6,8 @@ import java.util.Set;
 
 import com.bootdo.common.config.ApplicationContextRegister;
 import com.bootdo.system.domain.UserToken;
+
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -15,10 +17,12 @@ import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bootdo.common.utils.MD5Utils;
 import com.bootdo.common.utils.ShiroUtils;
 import com.bootdo.system.dao.UserDao;
 import com.bootdo.system.domain.UserDO;
@@ -46,11 +50,10 @@ public class UserRealm extends AuthorizingRealm {
 		Map<String, Object> map = new HashMap<>(16);
 		map.put("username", username);
 		String password = new String((char[]) token.getCredentials());
-
+	
 		UserDao userMapper = ApplicationContextRegister.getBean(UserDao.class);
 		// 查询用户信息
 		UserDO user = userMapper.list(map).get(0);
-
 		// 账号不存在
 		if (user == null) {
 			throw new UnknownAccountException("账号或密码不正确");
