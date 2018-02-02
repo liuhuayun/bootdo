@@ -5,11 +5,14 @@ import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author bootdo 1992lcg@163.com
@@ -27,11 +30,15 @@ public class RedisSessionDAO extends AbstractSessionDAO {
      * The Redis key prefix for the sessions
      */
     private String keyPrefix = "shiro_redis_session:";
-
+    
+    @Autowired
+    private RedisTemplate<String, Session> redisTemplate;
+    
     @Override
     public void update(Session session) throws UnknownSessionException {
-        this.saveSession(session);
-    }
+        //this.saveSession(session);
+    	saveSession(session);
+  }
 
     /**
      * save session
@@ -39,7 +46,7 @@ public class RedisSessionDAO extends AbstractSessionDAO {
      * @throws UnknownSessionException
      */
     private void saveSession(Session session) throws UnknownSessionException{
-        if(session == null || session.getId() == null){
+       /* if(session == null || session.getId() == null){
             logger.error("session or session id is null");
             return;
         }
@@ -47,22 +54,23 @@ public class RedisSessionDAO extends AbstractSessionDAO {
         byte[] key = getByteKey(session.getId());
         byte[] value = SerializeUtils.serialize(session);
         session.setTimeout(redisManager.getExpire()*1000);
-        this.redisManager.set(key, value, redisManager.getExpire());
+        this.redisManager.set(key, value, redisManager.getExpire());*/
+    	redisTemplate.opsForValue().set(session.getId().toString(),session,session.getTimeout(),TimeUnit.MILLISECONDS);
     }
 
     @Override
     public void delete(Session session) {
-        if(session == null || session.getId() == null){
+       /* if(session == null || session.getId() == null){
             logger.error("session or session id is null");
             return;
         }
-        redisManager.del(this.getByteKey(session.getId()));
-
+        redisManager.del(this.getByteKey(session.getId()));*/
+        redisTemplate.delete(session.getId().toString());
     }
 
     @Override
     public Collection<Session> getActiveSessions() {
-        Set<Session> sessions = new HashSet<Session>();
+       /* Set<Session> sessions = new HashSet<Session>();
 
         Set<byte[]> keys = redisManager.keys(this.keyPrefix + "*");
         if(keys != null && keys.size()>0){
@@ -72,26 +80,31 @@ public class RedisSessionDAO extends AbstractSessionDAO {
             }
         }
 
-        return sessions;
+        return sessions;*/
+    	return redisTemplate.opsForValue().multiGet(redisTemplate.keys(this.keyPrefix+"*"));
     }
 
     @Override
     protected Serializable doCreate(Session session) {
-        Serializable sessionId = this.generateSessionId(session);
+       /* Serializable sessionId = this.generateSessionId(session);
         this.assignSessionId(session, sessionId);
         this.saveSession(session);
-        return sessionId;
+        return sessionId;*/
+    	super.assignSessionId(session, this.keyPrefix + super.generateSessionId(session));
+		update(session);
+		return session.getId();
     }
 
     @Override
     protected Session doReadSession(Serializable sessionId) {
-        if(sessionId == null){
+        /*if(sessionId == null){
             logger.error("session id is null");
             return null;
         }
 
         Session s = (Session)SerializeUtils.deserialize(redisManager.get(this.getByteKey(sessionId)));
-        return s;
+        return s;*/
+    	return redisTemplate.opsForValue().get(sessionId);
     }
 
     /**
@@ -134,6 +147,14 @@ public class RedisSessionDAO extends AbstractSessionDAO {
     public void setKeyPrefix(String keyPrefix) {
         this.keyPrefix = keyPrefix;
     }
+
+	public RedisTemplate<String, Session> getRedisTemplate() {
+		return redisTemplate;
+	}
+
+	public void setRedisTemplate(RedisTemplate<String, Session> redisTemplate) {
+		this.redisTemplate = redisTemplate;
+	}
 
 
 }

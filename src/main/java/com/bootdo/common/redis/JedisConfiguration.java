@@ -4,6 +4,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -28,6 +36,7 @@ public class JedisConfiguration {
 
     @Value("${spring.redis.password}")
     private String password;
+    
     @Bean
     public JedisPool redisPoolFactory() {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
@@ -35,5 +44,17 @@ public class JedisConfiguration {
         jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);
         JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout, password);
         return jedisPool;
+    }
+    
+    @Bean
+    public RedisTemplate redisTemplate(RedisConnectionFactory factory) {
+        RedisTemplate template = new RedisTemplate<>();
+        template.setConnectionFactory(factory);
+       // Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+       StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+       template.setDefaultSerializer(stringRedisSerializer);
+       template.setKeySerializer(stringRedisSerializer);
+       template.setHashKeySerializer(stringRedisSerializer);
+        return template;
     }
 }
