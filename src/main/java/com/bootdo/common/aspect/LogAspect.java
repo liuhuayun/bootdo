@@ -65,7 +65,7 @@ public class LogAspect {
 		// 请求的参数
 		Object[] args = joinPoint.getArgs();
 		try {
-			String params = JSONUtils.beanToJson(args[0]).substring(0, 4999);
+			String params = JSONUtils.beanToJson(args[0]);//.substring(0, 4999);
 			sysLog.setParams(params);
 		} catch (Exception e) {
 

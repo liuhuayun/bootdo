@@ -213,7 +213,19 @@
             <artifactId>jsoup</artifactId>
             <version>1.9.2</version>
         </dependency>
-
+        
+ 	   <!-- 一个Java基础工具类 -->
+        <dependency>
+	      <groupId>cn.hutool</groupId>
+	      <artifactId>hutool-all</artifactId>
+	      <version>4.0.1</version>
+	   </dependency>
+	   <!-- javamelody -->
+	 <!--   <dependency>
+			<groupId>net.bull.javamelody</groupId>
+			<artifactId>javamelody-spring-boot-starter</artifactId>
+			<version>1.69.0</version>
+		</dependency> -->
         <!--<dependency>-->
             <!--<groupId>org.crazycake</groupId>-->
             <!--<artifactId>shiro-redis</artifactId>-->
