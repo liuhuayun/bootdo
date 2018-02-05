@@ -7,6 +7,8 @@ import com.bootdo.common.domain.TaskDO;
 import com.bootdo.common.quartz.utils.QuartzManager;
 import com.bootdo.common.service.JobService;
 import com.bootdo.common.utils.ScheduleJobUtils;
+import com.google.common.collect.Maps;
+
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -83,7 +85,9 @@ public class JobServiceImpl implements JobService {
 		for (TaskDO scheduleJob : jobList) {
 			if ("1".equals(scheduleJob.getJobStatus())) {
 				ScheduleJob job = ScheduleJobUtils.entityToData(scheduleJob);
-				quartzManager.addJob(job);
+				Map<Object, Object> paramsMap = Maps.newHashMap();
+				paramsMap.put("startInfo", "spring boot启动初始化所有任务");
+				quartzManager.addJob(job, paramsMap);
 			}
 
 		}
@@ -102,7 +106,7 @@ public class JobServiceImpl implements JobService {
 			if (!Constant.STATUS_RUNNING_START.equals(cmd)) {
 			} else {
                 scheduleJob.setJobStatus(ScheduleJob.STATUS_RUNNING);
-                quartzManager.addJob(ScheduleJobUtils.entityToData(scheduleJob));
+                quartzManager.addJob(ScheduleJobUtils.entityToData(scheduleJob),null);
             }
 		}
 		update(scheduleJob);

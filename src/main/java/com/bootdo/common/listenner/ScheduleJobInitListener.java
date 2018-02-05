@@ -15,8 +15,8 @@ public class ScheduleJobInitListener implements CommandLineRunner {
 	@Autowired
 	JobService scheduleJobService;
 
-	@Autowired
-	QuartzManager quartzManager;
+	//@Autowired
+	//QuartzManager quartzManager;
 
 	@Override
 	public void run(String... arg0) throws Exception {

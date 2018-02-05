@@ -2,6 +2,7 @@ package com.bootdo.common.quartz.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.apache.log4j.Logger;
 import org.quartz.CronScheduleBuilder;
@@ -54,7 +55,7 @@ public class QuartzManager {
 	 * @throws SchedulerException
 	 */
 	
-	public void addJob(ScheduleJob job) {
+	public void addJob(ScheduleJob job, Map paramMap) {
 		try {
 			// 创建jobDetail实例，绑定Job实现类
 			// 指明job的名称，所在组的名称，以及绑定job类
@@ -63,6 +64,8 @@ public class QuartzManager {
 					.getClass());
 			JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(job.getJobName(), job.getJobGroup())// 任务名称和组构成任务key
 					.build();
+			if(paramMap != null)
+			   jobDetail.getJobDataMap().putAll(paramMap);
 			// 定义调度触发规则
 			// 使用cornTrigger规则
 			Trigger trigger = TriggerBuilder.newTrigger().withIdentity(job.getJobName(), job.getJobGroup())// 触发器key
